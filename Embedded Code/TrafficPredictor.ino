@@ -52,8 +52,8 @@ void loop() {
 
 void servoRotate()
 {
-  //Servo rotate from 0 to 90
-  for(pos = 0; pos <= 90; pos += 2){
+  //Servo rotate from 0 to 180
+  for(pos = 0; pos <= 180; pos += 2){
     myservo.write(pos);
     delay(10);
     
@@ -66,8 +66,8 @@ void servoRotate()
     Serial.println();
   }
 
-  //Servo rotate from 90 to 0
-  for(pos = 90; pos >= 0; pos -= 2){
+  //Servo rotate from 180 to 0
+  for(pos = 180; pos >= 0; pos -= 2){
     myservo.write(pos);
     delay(10);
     distance = calculateDistance();
