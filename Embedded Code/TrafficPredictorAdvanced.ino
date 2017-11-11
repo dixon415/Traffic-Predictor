@@ -63,11 +63,11 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   //servoRotate();
-  delay(500);
+  delay(10);
   serialPrint(45);
-  delay(500);
+  delay(10);
   serialPrint(90);
-  delay(500);
+  delay(10);
   serialPrint(135);
   Serial.println();
 }
@@ -76,50 +76,30 @@ void serialPrint(int pos){
   myservo.write(pos);
   delay(10);
   value = calculateDistance();
-  Serial.print(value);
-  Serial.print(",");
-  if(pos == 45){
-    left = value;
-    if((leftt - left <= 10) || (left - leftt <= 10))
-    {
-      countlt++;
-    }
-    if(left <= 60)
-    {
-      countl++;
-      if(countl>=5){
-        Serial.print("A");
-        Serial.print(",");
-      }
-    }
-    else if (left <= 100)
-    {
-      
-      countl++;
-      if(countl>=5){
-        Serial.print("T");
-        Serial.print(",");
-      }
-    }
-    else
-    {
-      countl = 0;
-      countl++;
-      if(countl>=5){
-        Serial.print("N");
-        Serial.print(",");
-      }
-    }
-    leftt = left;
+  if(pos==45){
+    Serial.print(classifiedData(value));
+    Serial.print(",");
   }
-  else if(pos == 90){
-    mid = value;
+  else if(pos==90){
+    Serial.print(classifiedData(value));
+    Serial.print(",");
   }
-  else if(right == 90){
-    right = value;
+  else if(pos==135){
+    Serial.print(classifiedData(value));
   }
+  else{Serial.print('N');Serial.print(",");}
 }
 
+char classifiedData(int value){
+  char out=' ';
+  if((value<=60)&&(value!=0)){out = 'A';}
+  else if((value<=100)&&(value>=75)&&(value!=0))
+  {
+    out = 'T';
+  }
+  else{out='N';}
+  return out;
+}
 
 int calculateDistance()
 {
