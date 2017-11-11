@@ -26,19 +26,15 @@
  * Mid = 90 degree
  * Right = 135 degree
  * 
- * S (Stop) <= 50
+ * A (Alert) <= 60
  * T (Traffic) <=75
- * O (Overtake) >=150
+ * N (Normal) >=90
  */     
 #include <Servo.h>
 
 //Servo variables and constants
 Servo myservo;
 int pos = 0;
-int left = 0, right = 0, mid = 0;
-int countl = 0, countm = 0, countr = 0;
-int leftt = 0, rightt = 0, midt = 0;
-int countlt = 0, countmt = 0, countrt = 0;
 int value = 0;
 int servoPin = 3;//Nucleo pin D3
 
@@ -63,11 +59,11 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   //servoRotate();
-  delay(10);
+  delay(250);
   serialPrint(45);
-  delay(10);
+  delay(250);
   serialPrint(90);
-  delay(10);
+  delay(250);
   serialPrint(135);
   Serial.println();
 }
@@ -93,7 +89,7 @@ void serialPrint(int pos){
 char classifiedData(int value){
   char out=' ';
   if((value<=60)&&(value!=0)){out = 'A';}
-  else if((value<=100)&&(value>=75)&&(value!=0))
+  else if((value<=90)&&(value>=75)&&(value!=0))
   {
     out = 'T';
   }
@@ -113,33 +109,3 @@ int calculateDistance()
   distance= duration*0.034/2;
   return distance;
 }
-/*void servoRotate()
-{
-  //Servo rotate from 0 to 180
-  for(pos = 0; pos <= 180; pos += 2){
-    myservo.write(pos);
-    delay(10);
-    
-    distance = calculateDistance();
-    
-    //Send Data in the format -> (position, distance)
-    Serial.print(pos);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.println();
-  }
-
-  //Servo rotate from 180 to 0
-  for(pos = 180; pos >= 0; pos -= 2){
-    myservo.write(pos);
-    delay(10);
-    distance = calculateDistance();
-    Serial.print(pos);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.println();
-  }
-}*/
-
-
-
